@@ -1,9 +1,10 @@
-
 # Bling 
 
 Bling is a Go HTTP client library for creating and sending API requests written in Golang/Go.
 
 ![bling Logo](bling-logo.png)
+
+[![Build Status](https://travis-ci.org/blinghttp/bling.svg "Travis CI status")](https://travis-ci.org/blinghttp/bling)    
 
 Bling has cool methods which simplify setting HTTP Request properties and sending request. Check [usage](#usage) or the [examples](examples) to learn how to use Bling in your code.
 

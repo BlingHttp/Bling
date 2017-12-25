@@ -133,3 +133,26 @@ func TestMethodSetters(t *testing.T) {
 		}
 	}
 }
+
+func TestRequest_Do(t *testing.T) {
+	client, mux, server := testServer()
+	defer server.Close()
+	mux.HandleFunc("/get", func(w http.ResponseWriter, r *http.Request) {
+		assertMethod(t, "GET", r)
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprintf(w, `{"status": "okay", "data": "bling"}`)
+	})
+
+	blingClient := New().Client(client)
+	result := blingClient.Get("http://google.com/get").Do()
+	if result.err != nil {
+		t.Errorf("result should not return err")
+	}
+	if string(result.body) != `{"status": "okay", "data": "bling"}` {
+		t.Errorf("result body should match expected body")
+	}
+	if result.statusCode != http.StatusOK {
+		t.Errorf("result status code should be 200")
+	}
+}
